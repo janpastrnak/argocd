@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: app-set-1
+  name: app-set-cc-test
 spec:
   generators:
   - matrix:
