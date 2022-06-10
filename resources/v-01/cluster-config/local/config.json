@@ -2,6 +2,7 @@
 {
   "cluster": {
     "name": "local",
-    "server": "https://kubernetes.default.svc"
+    "server": "https://kubernetes.default.svc",
+    "overlay": "cluster1"
   }
 }
