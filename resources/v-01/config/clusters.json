@@ -1,0 +1,7 @@
+
+{
+    "cluster": {
+      "name": "local",
+      "server": "https://kubernetes.default.svc"
+    }
+  }
