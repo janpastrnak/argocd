@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cc-test-infra-prometheus
+  namespace: argocd
+operation:
+  initiatedBy:
+    automated: true
+  retry:
+    limit: 5
+  sync:
+    revision: 36.0.0
+    syncOptions:
+    - Validate=false
+    - CreateNamespace=true
+spec:
+  destination:
+    namespace: monitoring
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    chart: kube-prometheus-stack
+    repoURL: https://prometheus-community.github.io/helm-charts
+    targetRevision: 36.0.0
+  syncPolicy:
+    automated:
+      selfHeal: true
+    syncOptions:
+    - Validate=false
+    - CreateNamespace=true
