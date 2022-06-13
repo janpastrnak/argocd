@@ -19,6 +19,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: argocd-server-metrics
+  namespace: monitoring
   labels:
     release: prometheus
 spec:
@@ -35,6 +36,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: argocd-repo-server-metrics
+  namespace: monitoring
   labels:
     release: prometheus
 spec:
