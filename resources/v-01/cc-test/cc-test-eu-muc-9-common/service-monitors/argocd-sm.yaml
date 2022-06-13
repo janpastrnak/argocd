@@ -4,7 +4,7 @@ metadata:
   name: argocd-metrics
   namespace: monitoring
   labels:
-    release: prometheus
+    release: cc-test-infra-prometheus
 spec:
   namespaceSelector:
     matchNames:
@@ -21,7 +21,7 @@ metadata:
   name: argocd-server-metrics
   namespace: monitoring
   labels:
-    release: prometheus
+    release: cc-test-infra-prometheus
 spec:
   namespaceSelector:
     matchNames:
@@ -38,7 +38,7 @@ metadata:
   name: argocd-repo-server-metrics
   namespace: monitoring
   labels:
-    release: prometheus
+    release: cc-test-infra-prometheus
 spec:
   namespaceSelector:
     matchNames:
