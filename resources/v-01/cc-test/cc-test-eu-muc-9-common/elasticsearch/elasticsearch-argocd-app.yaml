@@ -8,6 +8,13 @@ spec:
     namespace: elasticsearch
     server: 'https://kubernetes.default.svc'
   project: default
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+    syncOptions:
+      - Validate=false
+      - CreateNamespace=true
   source:
     path: ''
     repoURL: 'https://helm.elastic.co'
@@ -39,18 +46,10 @@ spec:
             cpu: "1000m"
             memory: "768M"
 
-# Request smaller persistent volumes.
-volumeClaimTemplate:
-  accessModes: [ "ReadWriteOnce" ]
-  storageClassName: "local-path"
-  resources:
-    requests:
-      storage: 1Gi
-  project: default
-  syncPolicy:
-    automated:
-      prune: false
-      selfHeal: true
-    syncOptions:
-      - Validate=false
-      - CreateNamespace=true
+        # Request smaller persistent volumes.
+        volumeClaimTemplate:
+          accessModes: [ "ReadWriteOnce" ]
+          storageClassName: "local-path"
+          resources:
+            requests:
+              storage: 1Gi
