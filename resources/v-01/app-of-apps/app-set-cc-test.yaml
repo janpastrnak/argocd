@@ -21,8 +21,6 @@ spec:
     spec:
       project: default
       source:
-        directory:
-          recurse: true
         repoURL: https://github.com/janpastrnak/argocd
         targetRevision: main
         path: '{{path}}'
