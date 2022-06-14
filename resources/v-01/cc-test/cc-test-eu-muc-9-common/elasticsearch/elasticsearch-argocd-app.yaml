@@ -31,6 +31,10 @@ spec:
         imageTag: "8.1.0"
         imagePullPolicy: "IfNotPresent"
 
+        replicas: 1
+        minimumMasterNodes: 1
+        clusterHealthCheckParams: 'wait_for_status=yellow&timeout=1s'
+
         # Permit co-located instances for solitary minikube virtual machines.
         antiAffinity: "soft"
 
