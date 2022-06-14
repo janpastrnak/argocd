@@ -1,0 +1,28 @@
+---
+# Image specifications
+image: "docker.elastic.co/elasticsearch/elasticsearch"
+imageTag: "8.1.0"
+imagePullPolicy: "IfNotPresent"
+
+# Permit co-located instances for solitary minikube virtual machines.
+antiAffinity: "soft"
+
+# Shrink default JVM heap.
+esJavaOpts: "-Xmx450m -Xms450m"
+
+# Allocate smaller chunks of memory per pod.
+resources:
+  requests:
+    cpu: "100m"
+    memory: "768M"
+  limits:
+    cpu: "1000m"
+    memory: "768M"
+
+# Request smaller persistent volumes.
+volumeClaimTemplate:
+  accessModes: [ "ReadWriteOnce" ]
+  storageClassName: "local-path"
+  resources:
+    requests:
+      storage: 1Gi
