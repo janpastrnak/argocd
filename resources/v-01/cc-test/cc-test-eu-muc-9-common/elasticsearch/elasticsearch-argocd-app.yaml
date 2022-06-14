@@ -60,7 +60,7 @@ spec:
 
         roles:
           master: "true"
-          ingest: "false"
+          ingest:
           data:
           ml:
           remote_cluster_client:
