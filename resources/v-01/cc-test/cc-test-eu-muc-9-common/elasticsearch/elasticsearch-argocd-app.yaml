@@ -57,3 +57,10 @@ spec:
           resources:
             requests:
               storage: 1Gi
+
+        roles:
+          master: "true"
+          ingest: "false"
+          data: "false"
+          ml:
+          remote_cluster_client:
