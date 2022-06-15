@@ -1,0 +1,41 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cc-test-infra-kibana-app
+  namespace: argocd
+spec:
+  destination:
+    namespace: elasticsearch
+    server: 'https://kubernetes.default.svc'
+  project: default
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+    syncOptions:
+      - Validate=false
+      - CreateNamespace=true
+  source:
+    path: ''
+    repoURL: 'https://helm.elastic.co'
+    targetRevision: 7.17.3
+    chart: kibana
+    helm:
+      valueFiles:
+        - values.yaml
+      values: |-
+        ---
+        # Image specifications
+        image: "docker.elastic.co/kibana/kibana"
+        imageTag: "7.17.3"
+        imagePullPolicy: "IfNotPresent"
+
+        # Allocate smaller chunks of memory per pod.
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+          limits:
+            cpu: "1000m"
+            memory: "1Gi"
+

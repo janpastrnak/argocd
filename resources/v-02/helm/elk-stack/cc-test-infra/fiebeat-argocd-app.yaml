@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cc-test-infra-filebeat
+  namespace: argocd
+spec:
+  destination:
+    namespace: elasticsearch
+    server: 'https://kubernetes.default.svc'
+  project: default
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+    syncOptions:
+      - Validate=false
+      - CreateNamespace=true
+  source:
+    path: ''
+    repoURL: 'https://helm.elastic.co'
+    targetRevision: 7.17.3
+    chart: filebeat
+    helm:
+      valueFiles:
+        - values.yaml
+      values: |-
+        ---
+        # Image specifications
+        image: "docker.elastic.co/beats/filebeat"
+        imageTag: "7.17.3"
+        imagePullPolicy: "IfNotPresent"

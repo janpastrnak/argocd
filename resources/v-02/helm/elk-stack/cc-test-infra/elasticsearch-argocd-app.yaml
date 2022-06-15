@@ -1,0 +1,59 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cc-test-infra-elasticsearch
+  namespace: argocd
+spec:
+  destination:
+    namespace: elasticsearch
+    server: 'https://kubernetes.default.svc'
+  project: default
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+    syncOptions:
+      - Validate=false
+      - CreateNamespace=true
+  source:
+    path: ''
+    repoURL: 'https://helm.elastic.co'
+    targetRevision: 7.17.3
+    chart: elasticsearch
+    helm:
+      valueFiles:
+        - values.yaml
+      values: |-
+        ---
+        # from elasticsearch-values.yaml
+        # Image specifications
+        image: "docker.elastic.co/elasticsearch/elasticsearch"
+        imageTag: "7.17.3"
+        imagePullPolicy: "IfNotPresent"
+
+        replicas: 1
+        minimumMasterNodes: 1
+        clusterHealthCheckParams: 'wait_for_status=yellow&timeout=1s'
+
+        # Permit co-located instances for solitary minikube virtual machines.
+        antiAffinity: "soft"
+
+        # Shrink default JVM heap.
+        esJavaOpts: "-Xmx640m -Xms640m"
+
+        # Allocate smaller chunks of memory per pod.
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "1Gi"
+          limits:
+            cpu: "1000m"
+            memory: "1Gi"
+
+        # Request smaller persistent volumes.
+        volumeClaimTemplate:
+          accessModes: [ "ReadWriteOnce" ]
+          storageClassName: "local-path"
+          resources:
+            requests:
+              storage: 1Gi
