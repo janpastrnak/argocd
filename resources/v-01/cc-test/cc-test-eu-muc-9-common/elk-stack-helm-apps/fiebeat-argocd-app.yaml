@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cc-test-infra-kibana-app
+  name: cc-test-infra-filebeat
   namespace: argocd
 spec:
   destination:
@@ -19,23 +19,13 @@ spec:
     path: ''
     repoURL: 'https://helm.elastic.co'
     targetRevision: 7.17.3
-    chart: kibana
+    chart: filebeat
     helm:
       valueFiles:
         - values.yaml
       values: |-
         ---
         # Image specifications
-        image: "docker.elastic.co/kibana/kibana"
+        image: "docker.elastic.co/beats/filebeat"
         imageTag: "7.17.3"
         imagePullPolicy: "IfNotPresent"
-
-        # Allocate smaller chunks of memory per pod.
-        resources:
-          requests:
-            cpu: "500m"
-            memory: "1Gi"
-          limits:
-            cpu: "1000m"
-            memory: "1Gi"
-
